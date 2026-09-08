@@ -22,6 +22,68 @@ export async function fetchDailyGuides(): Promise<DailyGuideResult> {
   return { data: data ?? [], error: null };
 }
 
+export async function fetchTodaysDailyGuide(): Promise<{
+  data: DailyGuide | null;
+  error: string | null;
+}> {
+  if (!supabase) {
+    return { data: null, error: "not-configured" };
+  }
+
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(
+    today.getDate()
+  ).padStart(2, "0")}`;
+
+  // Prefer an exact match for today's date.
+  const exact = await supabase
+    .from("daily_guides")
+    .select("*")
+    .eq("published", true)
+    .eq("guide_date", todayStr)
+    .maybeSingle();
+
+  if (exact.error) {
+    return { data: null, error: exact.error.message };
+  }
+  if (exact.data) {
+    return { data: exact.data, error: null };
+  }
+
+  // No entry for today: fall back to the most recent entry on or before
+  // today, so the homepage still shows something relevant rather than a
+  // future-dated entry.
+  const past = await supabase
+    .from("daily_guides")
+    .select("*")
+    .eq("published", true)
+    .lte("guide_date", todayStr)
+    .order("guide_date", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (past.error) {
+    return { data: null, error: past.error.message };
+  }
+  if (past.data) {
+    return { data: past.data, error: null };
+  }
+
+  // No past entry either: fall back to the earliest available entry.
+  const earliest = await supabase
+    .from("daily_guides")
+    .select("*")
+    .eq("published", true)
+    .order("guide_date", { ascending: true })
+    .limit(1)
+    .maybeSingle();
+
+  if (earliest.error) {
+    return { data: null, error: earliest.error.message };
+  }
+  return { data: earliest.data ?? null, error: null };
+}
+
 export async function fetchLatestDailyGuide(): Promise<{
   data: DailyGuide | null;
   error: string | null;

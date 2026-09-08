@@ -4,6 +4,7 @@ import Seo from "@/components/Seo";
 import { fetchMessages } from "@/lib/messages";
 import type { MessageRecord } from "@/types/content";
 import StatePanel from "@/components/ui/StatePanel";
+import ResponsiveImage from "@/components/ui/ResponsiveImage";
 
 export default function MessagesListPage() {
   const [messages, setMessages] = useState<MessageRecord[]>([]);
@@ -76,15 +77,24 @@ export default function MessagesListPage() {
                 <Link
                   key={message.id}
                   to={`/messages/${message.slug}`}
-                  className="border border-stone-200 p-8 flex flex-col gap-4 hover:border-ink transition-colors"
+                  className="border border-stone-200 flex flex-col hover:border-ink transition-colors"
                 >
-                  <span className="text-xs uppercase tracking-widest2 text-stone-400">
-                    {message.part ? `Part ${message.part}` : "Message"}
-                  </span>
-                  <h2 className="text-xl font-medium">{message.title}</h2>
-                  <p className="text-stone-600 leading-relaxed line-clamp-4">
-                    {message.description}
-                  </p>
+                  {message.image_url && (
+                    <ResponsiveImage
+                      src={message.image_url}
+                      alt={message.title}
+                      className="w-full aspect-[16/9] object-cover"
+                    />
+                  )}
+                  <div className="p-8 flex flex-col gap-4">
+                    <span className="text-xs uppercase tracking-widest2 text-stone-400">
+                      {message.part ? `Part ${message.part}` : "Message"}
+                    </span>
+                    <h2 className="text-xl font-medium">{message.title}</h2>
+                    <p className="text-stone-600 leading-relaxed line-clamp-4">
+                      {message.description}
+                    </p>
+                  </div>
                 </Link>
               ))}
             </div>

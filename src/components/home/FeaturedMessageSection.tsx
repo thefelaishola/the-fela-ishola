@@ -3,6 +3,7 @@ import { fetchFeaturedMessages } from "@/lib/messages";
 import type { MessageRecord } from "@/types/content";
 import { LinkButton } from "@/components/ui/Button";
 import StatePanel from "@/components/ui/StatePanel";
+import ResponsiveImage from "@/components/ui/ResponsiveImage";
 
 export default function FeaturedMessageSection() {
   const [messages, setMessages] = useState<MessageRecord[]>([]);
@@ -68,23 +69,32 @@ export default function FeaturedMessageSection() {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className="border border-stone-200 p-8 flex flex-col gap-4"
+                className="border border-stone-200 flex flex-col"
               >
-                <span className="text-xs uppercase tracking-widest2 text-stone-400">
-                  {message.part ? `Part ${message.part}` : "Message"}
-                </span>
-                <h3 className="text-xl font-medium">{message.title}</h3>
-                <p className="text-stone-600 leading-relaxed line-clamp-4">
-                  {message.description}
-                </p>
-                <div className="mt-2">
-                  <LinkButton
-                    to={`/messages/${message.slug}`}
-                    variant="ghost"
-                    className="border-ink"
-                  >
-                    Read the Full Message
-                  </LinkButton>
+                {message.image_url && (
+                  <ResponsiveImage
+                    src={message.image_url}
+                    alt={message.title}
+                    className="w-full aspect-[16/9] object-cover"
+                  />
+                )}
+                <div className="p-8 flex flex-col gap-4">
+                  <span className="text-xs uppercase tracking-widest2 text-stone-400">
+                    {message.part ? `Part ${message.part}` : "Message"}
+                  </span>
+                  <h3 className="text-xl font-medium">{message.title}</h3>
+                  <p className="text-stone-600 leading-relaxed line-clamp-4">
+                    {message.description}
+                  </p>
+                  <div className="mt-2">
+                    <LinkButton
+                      to={`/messages/${message.slug}`}
+                      variant="ghost"
+                      className="border-ink"
+                    >
+                      Read the Full Message
+                    </LinkButton>
+                  </div>
                 </div>
               </div>
             ))}

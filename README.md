@@ -70,14 +70,18 @@ supplied:
 
 To set up the database:
 
-1. In the Supabase SQL editor (or via the Supabase CLI), run the
-   migration in `supabase/migrations/0001_initial_schema.sql`. This
-   creates all five tables (`daily_guides`, `messages`,
-   `portfolio_projects`, `portfolio_images`, `contact_submissions`),
-   their indexes, and Row Level Security policies:
-   - Public (anonymous) users can **read** published content
-   - Public users can **insert** contact form submissions only
-   - Public users **cannot** update or delete anything
+1. In the Supabase SQL editor (or via the Supabase CLI), run the two
+   migrations in `supabase/migrations/`, in order:
+   - `0001_initial_schema.sql`: creates all five tables (`daily_guides`,
+     `messages`, `portfolio_projects`, `portfolio_images`,
+     `contact_submissions`), their indexes, and Row Level Security
+     policies:
+     - Public (anonymous) users can **read** published content
+     - Public users can **insert** contact form submissions only
+     - Public users **cannot** update or delete anything
+   - `0002_messages_image_url.sql`: adds the `image_url` column to
+     `messages`, since each message needs a cover image alongside its
+     introduction and audio
 2. Run the three seed files in `supabase/seed/`, in order:
    - `01_daily_guides_september.sql`, all 30 September entries, extracted
      directly from the Daily Guide DOCX you supplied
@@ -142,22 +146,23 @@ be committed; set the same two variables in Netlify for production.
 
 | Asset | Folder | Recommended Format | Recommended Size |
 |---|---|---|---|
-| Main professional portrait | `public/images/profile/` | WebP/JPG | 4:5, 1600 x 2000px+ |
-| Ministry photographs | `public/images/ministry/` | WebP/JPG | 16:9 (wide sections) or 4:5 (cards) |
-| Personal photographs | `public/images/personal/` | WebP/JPG | 4:5 |
-| Hero desktop images | `public/images/hero/` | WebP/AVIF | 16:9, 1920 x 1080px+ |
-| Hero mobile images | `public/images/hero/` | WebP/AVIF | 4:5 or 3:4, 1600 x 2000px+ |
-| Freedom Nation logo | `public/images/logos/` | SVG preferred | Vector |
-| Fegitals Digitals logo | `public/images/logos/` | SVG preferred | Vector |
-| Daily Guide images (optional) | `public/images/daily-guide/` | WebP/JPG | Appropriate to placement |
+| Main professional portrait | `public/images/profile/` | PNG/WebP/JPG | 4:5, 1600 x 2000px+ |
+| Ministry photographs | `public/images/ministry/` | PNG/WebP/JPG | 16:9 (wide sections) or 4:5 (cards) |
+| Personal photographs | `public/images/personal/` | PNG/WebP/JPG | 4:5 |
+| Hero desktop images | `public/images/hero/` | PNG/WebP/AVIF | 16:9, 1920 x 1080px+ |
+| Hero mobile images | `public/images/hero/` | PNG/WebP/AVIF | 4:5 or 3:4, 1600 x 2000px+ |
+| Freedom Nation logo | `public/images/logos/` | PNG (transparent) or SVG | Vector or high-res transparent |
+| Fegitals Digitals logo | `public/images/logos/` | PNG (transparent) or SVG | Vector or high-res transparent |
+| Daily Guide images (optional) | `public/images/daily-guide/` | PNG/WebP/JPG | Appropriate to placement |
+| Message cover images | `public/images/messages/` | PNG/WebP/JPG | 16:9 recommended |
 | Message audio | `public/audio/messages/` | MP3/M4A | High quality |
-| Portfolio images | `public/portfolio/[project-folder]/` | WebP/JPG | Preserve each project's original ratio |
+| Portfolio images | `public/portfolio/[project-folder]/` | PNG/WebP/JPG | Preserve each project's original ratio |
 | Open Graph preview image | `public/images/logos/og-default.jpg` | JPG | 1200 x 630px |
 
-Only create separate desktop/mobile versions where composition genuinely
-benefits, most notably the hero. A single portrait or portfolio image with
-sensible `object-position` is fine everywhere else; the site never
-distorts an image to force a ratio.
+Every image path in the app already expects `.png` filenames by default,
+since that is the format being supplied. If you use a different format for
+a particular file, just rename it to match what the code expects, or ask
+for the reference to be updated.
 
 ### Hero images specifically
 
@@ -221,24 +226,35 @@ The Daily Guide archive (`/daily-guide`) includes a search box that
 matches title, Bible reference, date, and body text, and works the same
 way on mobile as on desktop.
 
+### The homepage Daily Guide section
+
+The homepage always shows the entry for **today's date** (based on the
+visitor's device), not simply the most recently added entry. If there is
+no entry for today, it falls back to the most recent past entry, so the
+section never shows a future-dated guide the reader has not reached yet.
+
 ---
 
 ## 9. Messages
 
 `Peace Be Still, Part 1` and `Part 2` are seeded with their full supplied
-descriptions. Two fields are intentionally left empty until you provide
-them:
+descriptions, which serve as each message's introduction. These messages
+have **no transcript**, only an introduction, a cover image, and an audio
+file to listen to or download:
 
-- **Transcript**: when you have the transcript DOCX files, extract the
-  text and update the `transcript` column for the matching row in
-  `messages` (via the Supabase table editor, or a new seed file). The
-  message detail page automatically shows a "Transcript" section as soon
-  as that field is filled in, and shows nothing extra when it is empty.
+- **Cover image**: upload the image to `public/images/messages/`, or to
+  Supabase Storage, and set the `image_url` column on the matching row in
+  `messages` to that file's path or public URL. It appears at the top of
+  the message page, and as a thumbnail on the Messages list and the
+  homepage Featured Message section.
 - **Audio**: upload the audio file to `public/audio/messages/` (for
   example `peace-be-still-part-1.mp3`), or to Supabase Storage, and set
   the `audio_url` column to that file's path or public URL. The audio
-  player component only renders when `audio_url` is set; there is never
-  an empty player on the page.
+  player only renders when `audio_url` is set, and includes both a native
+  player and an explicit "Download Audio" link.
+- The `transcript` column stays empty for these two messages by design.
+  If a future message does have a transcript, filling in that column
+  automatically makes a "Transcript" section appear on its page.
 
 ---
 
@@ -297,19 +313,20 @@ directly) if the request fails.
 
 ## 13. Content Still Needed
 
-Per your instruction not to invent content, the following pieces of
-supplied content referenced in the brief were not included as literal
-text in our conversation and are left as empty, clearly-marked structure
-rather than invented text:
+Per your instruction not to invent content, the following are left as
+empty, clearly-marked structure rather than invented text or missing
+files:
 
-- The full text of the 15 About / Ministry / Fegitals Digitals stories
-  (structure and titles are in `src/data/aboutStories.ts`; each `body`
-  field is empty and the About page shows "This chapter is being
-  prepared" until filled in)
-- Message transcripts for both Peace Be Still parts
-- All photography, the Freedom Nation logo, and the Fegitals Digitals logo
+- All photography: hero images (all three slides, desktop and mobile),
+  main portrait, personal photos, ministry photos, Daily Guide images
 - Portfolio images for all ten projects
-- Message audio files
+- Message audio files for both Peace Be Still parts
+- Message cover images for both Peace Be Still parts
+
+The 15 About / Ministry / Fegitals Digitals stories are complete, with
+their full supplied text in `src/data/aboutStories.ts`. Message
+transcripts are intentionally not needed: these two messages have no
+transcript by design, only an introduction, a cover image, and audio.
 
 Nothing else on the site is invented: no testimonials, no statistics, no
 additional ministries, clients, or achievements beyond what was supplied.
@@ -336,11 +353,11 @@ additional ministries, clients, or achievements beyond what was supplied.
 
 5. **Freedom Nation logo**
    Upload to `public/images/logos/`
-   SVG preferred
+   PNG (transparent) or SVG preferred
 
 6. **Fegitals Digitals logo**
    Upload to `public/images/logos/`
-   SVG preferred
+   PNG (transparent) or SVG preferred
 
 7. **Daily Guide images** (optional)
    Upload to `public/images/daily-guide/`
@@ -348,13 +365,15 @@ additional ministries, clients, or achievements beyond what was supplied.
 8. **Message audio**
    Upload to `public/audio/messages/`
 
-9. **Portfolio images**
-   Upload each project's images into its corresponding folder under
-   `public/portfolio/`
+9. **Message cover images**
+   Upload to `public/images/messages/`
 
-10. **The 15 story texts, and the two message transcripts**
-    Send as text or DOCX; they will be added to `src/data/aboutStories.ts`
-    and to the `messages` table respectively.
+10. **Portfolio images**
+    Upload each project's images into its corresponding folder under
+    `public/portfolio/`
+
+The 15 About / Ministry / Fegitals Digitals stories are already in the
+site. PNG is the expected format for every image path referenced above.
 
 ---
 

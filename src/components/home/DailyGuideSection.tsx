@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchLatestDailyGuide } from "@/lib/dailyGuides";
+import { fetchTodaysDailyGuide } from "@/lib/dailyGuides";
 import type { DailyGuide } from "@/types/content";
 import { LinkButton } from "@/components/ui/Button";
 import StatePanel from "@/components/ui/StatePanel";
@@ -22,7 +22,7 @@ export default function DailyGuideSection() {
 
   useEffect(() => {
     let active = true;
-    fetchLatestDailyGuide().then(({ data, error }) => {
+    fetchTodaysDailyGuide().then(({ data, error }) => {
       if (!active) return;
       if (error === "not-configured") {
         setStatus("error");

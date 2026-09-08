@@ -5,6 +5,7 @@ import { fetchMessageBySlug } from "@/lib/messages";
 import type { MessageRecord } from "@/types/content";
 import StatePanel from "@/components/ui/StatePanel";
 import AudioPlayer from "@/components/messages/AudioPlayer";
+import ResponsiveImage from "@/components/ui/ResponsiveImage";
 
 export default function MessageDetailPage() {
   const { slug = "" } = useParams();
@@ -81,6 +82,14 @@ export default function MessageDetailPage() {
               {message.title}
             </h1>
           </div>
+
+          {message.image_url && (
+            <ResponsiveImage
+              src={message.image_url}
+              alt={message.title}
+              className="w-full aspect-[16/9] object-cover"
+            />
+          )}
 
           <AudioPlayer src={message.audio_url} title={message.title} />
 

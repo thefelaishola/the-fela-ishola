@@ -32,7 +32,7 @@ export default function AboutPage() {
             <p className="text-lg text-stone-600">A life, told in chapters.</p>
           </div>
           <ResponsiveImage
-            src="/images/personal/about-portrait.webp"
+            src="/images/personal/about-portrait.png"
             alt={SITE.personName}
             className="w-full aspect-[4/5] object-cover"
           />

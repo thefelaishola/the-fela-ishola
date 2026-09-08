@@ -24,6 +24,7 @@ export interface MessageRecord {
   description: string;
   transcript: string | null;
   audio_url: string | null;
+  image_url: string | null;
   message_date: string | null;
   featured: boolean;
   published: boolean;

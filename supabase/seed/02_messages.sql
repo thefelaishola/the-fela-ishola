@@ -1,11 +1,12 @@
 -- Seed data: Messages
--- Descriptions are copied exactly as supplied. Transcript and audio_url are
--- left null until the transcript DOCX files and audio files are provided;
--- the site never invents transcript content and never shows an audio
--- player when no audio file exists.
+-- Descriptions are copied exactly as supplied. Transcript is intentionally
+-- null: these messages have no transcript, only an introduction (stored in
+-- description) and, once uploaded, an audio file and a cover image.
+-- image_url requires migration 0002_messages_image_url.sql to have run
+-- first.
 
 insert into public.messages
-  (title, part, slug, description, transcript, audio_url, message_date, featured, published)
+  (title, part, slug, description, transcript, audio_url, image_url, message_date, featured, published)
 values
   (
     'Peace Be Still',
@@ -21,6 +22,7 @@ Sometimes, the prayer is not simply, ‘God, calm the storm.’ Sometimes, the p
     null,
     null,
     null,
+    null,
     true,
     true
   ),
@@ -33,6 +35,7 @@ Sometimes, the prayer is not simply, ‘God, calm the storm.’ Sometimes, the p
 Through the story of Jesus and His disciples in the storm, this message brings valuable lessons from God’s Word on how to respond when the problem is beyond our control. What do we do when we have prayed, obeyed, and trusted God, yet the storm still comes? How do we maintain our faith when it seems like God is silent?
 
 This part reminds us that not every storm is a consequence of our actions. Some storms are simply part of the journey. And even when the storm is raging, God remains present, faithful, and greater than whatever we may be facing.',
+    null,
     null,
     null,
     null,
