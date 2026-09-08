@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @apply font-display;
+}
+
+::selection {
+  @apply bg-ember text-paper;
+}
+
+/* Focus visibility for accessibility, no outline suppression */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #d9611a;
+  outline-offset: 3px;
+}
+
+/* Section rhythm */
+.section {
+  @apply px-6 sm:px-8 lg:px-12 xl:px-0;
+}
+
+.section-inner {
+  @apply mx-auto w-full max-w-content;
+}
+
+/* Fade-only hero transitions, no sliding */
+.hero-fade {
+  transition: opacity 1.2s ease-in-out;
+}
+
+.hero-fade-enter {
+  opacity: 0;
+}
+
+.hero-fade-enter-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fade {
+    transition: none;
+  }
+}
+
+/* Line clamp helpers without plugin dependency */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+audio {
+  width: 100%;
+}
+
+audio::-webkit-media-controls-panel {
+  background-color: #fafaf9;
+}
