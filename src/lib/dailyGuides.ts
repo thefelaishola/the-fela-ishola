@@ -6,6 +6,21 @@ export interface DailyGuideResult {
   error: string | null;
 }
 
+/** Today's date as YYYY-MM-DD, based on the visitor's device clock. */
+function todayStr(): string {
+  const today = new Date();
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(today.getDate()).padStart(2, "0")}`;
+}
+
+/**
+ * Every Daily Guide read goes through this date filter: an entry only
+ * becomes visible on or after its own guide_date. Guides for future days
+ * stay out of the archive, search, homepage, and direct links alike until
+ * their day arrives.
+ */
 export async function fetchDailyGuides(): Promise<DailyGuideResult> {
   if (!supabase) {
     return { data: [], error: "not-configured" };
@@ -14,6 +29,7 @@ export async function fetchDailyGuides(): Promise<DailyGuideResult> {
     .from("daily_guides")
     .select("*")
     .eq("published", true)
+    .lte("guide_date", todayStr())
     .order("guide_date", { ascending: true });
 
   if (error) {
@@ -30,17 +46,14 @@ export async function fetchTodaysDailyGuide(): Promise<{
     return { data: null, error: "not-configured" };
   }
 
-  const today = new Date();
-  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(
-    today.getDate()
-  ).padStart(2, "0")}`;
+  const today = todayStr();
 
   // Prefer an exact match for today's date.
   const exact = await supabase
     .from("daily_guides")
     .select("*")
     .eq("published", true)
-    .eq("guide_date", todayStr)
+    .eq("guide_date", today)
     .maybeSingle();
 
   if (exact.error) {
@@ -51,13 +64,12 @@ export async function fetchTodaysDailyGuide(): Promise<{
   }
 
   // No entry for today: fall back to the most recent entry on or before
-  // today, so the homepage still shows something relevant rather than a
-  // future-dated entry.
+  // today. Future-dated entries are never shown, even as a fallback.
   const past = await supabase
     .from("daily_guides")
     .select("*")
     .eq("published", true)
-    .lte("guide_date", todayStr)
+    .lte("guide_date", today)
     .order("guide_date", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -65,44 +77,7 @@ export async function fetchTodaysDailyGuide(): Promise<{
   if (past.error) {
     return { data: null, error: past.error.message };
   }
-  if (past.data) {
-    return { data: past.data, error: null };
-  }
-
-  // No past entry either: fall back to the earliest available entry.
-  const earliest = await supabase
-    .from("daily_guides")
-    .select("*")
-    .eq("published", true)
-    .order("guide_date", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-
-  if (earliest.error) {
-    return { data: null, error: earliest.error.message };
-  }
-  return { data: earliest.data ?? null, error: null };
-}
-
-export async function fetchLatestDailyGuide(): Promise<{
-  data: DailyGuide | null;
-  error: string | null;
-}> {
-  if (!supabase) {
-    return { data: null, error: "not-configured" };
-  }
-  const { data, error } = await supabase
-    .from("daily_guides")
-    .select("*")
-    .eq("published", true)
-    .order("guide_date", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  if (error) {
-    return { data: null, error: error.message };
-  }
-  return { data: data ?? null, error: null };
+  return { data: past.data ?? null, error: null };
 }
 
 export async function fetchDailyGuideBySlug(slug: string): Promise<{
@@ -117,6 +92,7 @@ export async function fetchDailyGuideBySlug(slug: string): Promise<{
     .select("*")
     .eq("slug", slug)
     .eq("published", true)
+    .lte("guide_date", todayStr())
     .maybeSingle();
 
   if (error) {

@@ -38,7 +38,7 @@ export default function FeaturedMessageSection() {
               Featured Message
             </span>
             <h2 className="text-3xl sm:text-4xl font-medium leading-tight">
-              Peace Be Still
+              Be Still
             </h2>
           </div>
           <LinkButton to="/messages" variant="ghost" className="border-ink">

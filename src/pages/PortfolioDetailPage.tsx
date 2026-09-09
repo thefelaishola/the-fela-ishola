@@ -105,13 +105,13 @@ export default function PortfolioDetailPage() {
               title="Images for this project are on the way"
             />
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {images.map((image, index) => (
                 <button
                   key={image.id}
                   type="button"
                   onClick={() => setLightboxIndex(index)}
-                  className="aspect-square overflow-hidden bg-stone-100"
+                  className="aspect-square overflow-hidden bg-stone-100 border border-stone-200"
                   aria-label={`View image ${index + 1} of ${project.name}`}
                 >
                   <ResponsiveImage

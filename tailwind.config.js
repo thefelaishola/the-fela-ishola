@@ -6,8 +6,8 @@ export default {
       colors: {
         ink: "#0A0A0A",
         paper: "#FFFFFF",
-        ember: "#D9611A",
-        "ember-dark": "#B84E12",
+        ember: "#FFBD59",
+        "ember-dark": "#A85D00",
         stone: {
           50: "#FAFAF9",
           100: "#F2F1EF",

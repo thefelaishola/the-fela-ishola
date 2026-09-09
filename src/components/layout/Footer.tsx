@@ -10,8 +10,13 @@ export default function Footer() {
       <div className="section py-16">
         <div className="section-inner grid gap-12 lg:grid-cols-[2fr_1fr_1fr]">
           <div className="flex flex-col gap-4 max-w-sm">
-            <Link to="/" className="font-display text-xl">
-              The Fela <span className="text-ember">ishola</span>
+            <Link to="/" className="flex items-center gap-2.5">
+              <img
+                src="/images/logos/brand-icon-white.png"
+                alt=""
+                className="h-7 w-auto"
+              />
+              <span className="font-display text-xl">The Fela ishola</span>
             </Link>
             <p className="text-sm text-stone-400">{SITE.personName}</p>
             <p className="text-sm text-stone-400">{SITE.title}</p>

@@ -29,10 +29,17 @@ export default function Header() {
         <div className="section-inner flex items-center justify-between h-20">
           <Link
             to="/"
-            className="font-display text-lg sm:text-xl tracking-tight text-ink"
+            className="flex items-center gap-2.5"
             aria-label={`${SITE.brandName}, home`}
           >
-            The Fela <span className="text-ember">ishola</span>
+            <img
+              src="/images/logos/brand-icon.png"
+              alt=""
+              className="h-8 sm:h-9 w-auto"
+            />
+            <span className="font-display text-lg sm:text-xl tracking-tight text-ink">
+              The Fela ishola
+            </span>
           </Link>
 
           <nav

@@ -106,7 +106,7 @@ export default function PortfolioListPage() {
           )}
 
           {status === "loading" && (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {[0, 1, 2, 3, 4, 5].map((i) => (
                 <div
                   key={i}
@@ -128,14 +128,14 @@ export default function PortfolioListPage() {
           )}
 
           {status === "ready" && (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {filtered.map((project) => (
                 <Link
                   key={project.id}
                   to={`/portfolio/${project.slug}`}
                   className="group flex flex-col gap-3"
                 >
-                  <div className="aspect-[4/5] overflow-hidden bg-stone-100">
+                  <div className="aspect-[4/5] overflow-hidden bg-stone-100 border border-stone-200">
                     <ResponsiveImage
                       src={project.cover_image ?? ""}
                       alt={project.name}
