@@ -25,7 +25,7 @@ export default function IntroSection() {
 
         <div className="order-1 lg:order-2">
           <ResponsiveImage
-            src="/images/profile/portrait-main.png"
+            src="/images/profile/portrait-main.jpg"
             alt={SITE.personName}
             className="w-full aspect-[4/5] object-cover"
           />
