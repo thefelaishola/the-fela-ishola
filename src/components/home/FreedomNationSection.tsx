@@ -12,11 +12,6 @@ export default function FreedomNationSection() {
             alt="Freedom Nation"
             className="w-40 h-40 sm:w-48 sm:h-48 object-contain"
           />
-          <ResponsiveImage
-            src="/images/logos/freedom-nation-logo.svg"
-            alt="Freedom Nation"
-            className="h-20 w-auto"
-          />
           <div className="border-l-2 border-ember pl-6">
             <p className="text-sm uppercase tracking-widest2 text-stone-400 mb-2">
               Meets

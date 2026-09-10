@@ -15,11 +15,6 @@ export default function MinistryPage() {
 
       <section className="section pt-16 pb-20 sm:pt-24 sm:pb-28 bg-ink text-paper">
         <div className="section-inner flex flex-col items-center text-center gap-8">
-          <ResponsiveImage
-            src="/images/logos/freedom-nation-logo.svg"
-            alt="Freedom Nation"
-            className="h-24 w-auto"
-          />
           <span className="text-xs uppercase tracking-widest2 text-ember">
             Ministry
           </span>
