@@ -22,8 +22,8 @@ const SLIDES: Slide[] = [
     body: "Welcome to The Fela ishola, a space where faith, creativity, purpose, and ideas come together. I'm Fela Ishola, and this is a glimpse into the things I believe, create, learn, and do.",
     primaryCta: { label: "Explore My Journey", to: "/about" },
     secondaryCta: { label: "Freedom Nation", to: "/ministry" },
-    desktopImage: "/images/hero/ministry-desktop.png",
-    mobileImage: "/images/hero/ministry-mobile.png",
+    desktopImage: "/images/hero/ministry-desktop-v2.png",
+    mobileImage: "/images/hero/ministry-mobile-v2.png",
     alt: "Fela Ishola",
   },
   {
@@ -32,8 +32,8 @@ const SLIDES: Slide[] = [
     heading: "Daily Guide",
     body: "A daily guide for believers who want to grow in their walk with God, wherever they are.",
     primaryCta: { label: "Read the Daily Guide", to: "/daily-guide" },
-    desktopImage: "/images/hero/daily-guide-desktop.png",
-    mobileImage: "/images/hero/daily-guide-mobile.png",
+    desktopImage: "/images/hero/daily-guide-desktop-v2.png",
+    mobileImage: "/images/hero/daily-guide-mobile-v2.png",
     alt: "The Daily Guide",
   },
   {
@@ -42,8 +42,8 @@ const SLIDES: Slide[] = [
     heading: "Ideas, Made Visible",
     body: "Through Fegitals Digitals, I create designs that help ideas, brands, and messages communicate with clarity.",
     primaryCta: { label: "Explore My Designs", to: "/portfolio" },
-    desktopImage: "/images/hero/design-desktop.png",
-    mobileImage: "/images/hero/design-mobile.png",
+    desktopImage: "/images/hero/design-desktop-v2.png",
+    mobileImage: "/images/hero/design-mobile-v2.png",
     alt: "Fegitals Digitals design work",
   },
 ];
