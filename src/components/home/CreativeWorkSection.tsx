@@ -50,7 +50,7 @@ export default function CreativeWorkSection() {
         </div>
 
         {status === "loading" && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6">
+          <div className="grid sm:grid-cols-3 gap-6">
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
@@ -72,7 +72,7 @@ export default function CreativeWorkSection() {
         )}
 
         {status === "ready" && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6">
+          <div className="grid sm:grid-cols-3 gap-6">
             {projects.map((project) => (
               <Link
                 key={project.id}

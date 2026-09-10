@@ -114,7 +114,7 @@ export function groupGuidesByMonth(guides: DailyGuide[]) {
   }
   return Array.from(groups.entries()).map(([month, entries]) => ({
     month,
-    entries: entries.sort((a, b) => (a.guide_date < b.guide_date ? -1 : 1)),
+    entries: entries.sort((a, b) => (a.guide_date > b.guide_date ? -1 : 1)),
   }));
 }
 
