@@ -63,10 +63,18 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="section-inner mt-12 pt-6 border-t border-stone-800 flex flex-col sm:flex-row justify-between gap-2 text-xs text-stone-500">
+        <div className="section-inner mt-12 pt-6 border-t border-stone-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs text-stone-500">
           <p>
             Copyright {year} {SITE.brandName}. All rights reserved.
           </p>
+          <div className="flex items-center gap-4">
+            <Link to="/privacy-policy" className="hover:text-ember transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="hover:text-ember transition-colors">
+              Terms and Conditions
+            </Link>
+          </div>
           <p>Faith. Creativity. Purpose. Ideas.</p>
         </div>
       </div>

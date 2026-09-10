@@ -11,6 +11,8 @@ import MessageDetailPage from "@/pages/MessageDetailPage";
 import PortfolioListPage from "@/pages/PortfolioListPage";
 import PortfolioDetailPage from "@/pages/PortfolioDetailPage";
 import ContactPage from "@/pages/ContactPage";
+import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
+import TermsPage from "@/pages/TermsPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
 function ScrollToTop() {
@@ -36,6 +38,8 @@ export default function App() {
         <Route path="/portfolio" element={<PortfolioListPage />} />
         <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </SiteLayout>
