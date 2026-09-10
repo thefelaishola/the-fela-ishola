@@ -39,6 +39,14 @@ export default function MinistryPage() {
         </div>
       </section>
 
+      <section className="w-full py-16 sm:py-20 bg-stone-50 flex justify-center">
+        <ResponsiveImage
+          src="/images/ministry/ministry-photo.png"
+          alt="Freedom Nation"
+          className="w-48 h-48 sm:w-60 sm:h-60 object-contain"
+        />
+      </section>
+
       <section className="section py-20 sm:py-28">
         <div className="section-inner grid gap-16 sm:grid-cols-3">
           <div className="flex flex-col gap-3">

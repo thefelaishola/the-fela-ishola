@@ -8,6 +8,11 @@ export default function FreedomNationSection() {
       <div className="section-inner grid gap-12 lg:grid-cols-[1fr_1.3fr] items-center">
         <div className="flex flex-col items-start gap-8">
           <ResponsiveImage
+            src="/images/freedom-nation/freedom-nation-homepage.png"
+            alt="Freedom Nation"
+            className="w-40 h-40 sm:w-48 sm:h-48 object-contain"
+          />
+          <ResponsiveImage
             src="/images/logos/freedom-nation-logo.svg"
             alt="Freedom Nation"
             className="h-20 w-auto"
