@@ -71,3 +71,12 @@ export type FreedomNationValue = {
   description: string;
   scriptures: string[];
 };
+
+export interface YouthQuestionSubmission {
+  is_anonymous: boolean;
+  name: string | null;
+  age: number | null;
+  school_type: "Secondary School" | "University" | "Other" | null;
+  state: string | null;
+  question: string;
+}

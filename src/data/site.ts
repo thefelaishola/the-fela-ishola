@@ -17,5 +17,6 @@ export const NAV_LINKS = [
   { label: "Daily Guide", href: "/daily-guide" },
   { label: "Messages", href: "/messages" },
   { label: "Portfolio", href: "/portfolio" },
+  { label: "Ask", href: "/ask" },
   { label: "Contact", href: "/contact" },
 ] as const;

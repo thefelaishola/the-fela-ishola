@@ -11,6 +11,7 @@ import MessageDetailPage from "@/pages/MessageDetailPage";
 import PortfolioListPage from "@/pages/PortfolioListPage";
 import PortfolioDetailPage from "@/pages/PortfolioDetailPage";
 import ContactPage from "@/pages/ContactPage";
+import AskPage from "@/pages/AskPage";
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsPage from "@/pages/TermsPage";
 import NotFoundPage from "@/pages/NotFoundPage";
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="/portfolio" element={<PortfolioListPage />} />
         <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/ask" element={<AskPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="*" element={<NotFoundPage />} />

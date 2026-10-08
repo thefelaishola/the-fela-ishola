@@ -5,6 +5,10 @@ import { fetchDailyGuideBySlug, fetchDailyGuides } from "@/lib/dailyGuides";
 import type { DailyGuide } from "@/types/content";
 import StatePanel from "@/components/ui/StatePanel";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/components/ui/Icons";
+import VerseReference from "@/components/daily-guide/VerseReference";
+import VersePopup from "@/components/daily-guide/VersePopup";
+import ShareOnScroll from "@/components/daily-guide/ShareOnScroll";
+import { SITE } from "@/data/site";
 
 function formatDate(dateStr: string) {
   const date = new Date(dateStr + "T00:00:00");
@@ -26,6 +30,7 @@ export default function DailyGuideDetailPage() {
   const [status, setStatus] = useState<"loading" | "ready" | "empty" | "error">(
     "loading"
   );
+  const [activeReference, setActiveReference] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -105,7 +110,12 @@ export default function DailyGuideDetailPage() {
             <h1 className="text-3xl sm:text-4xl font-medium leading-tight">
               {guide.title}
             </h1>
-            <p className="text-stone-500">{guide.bible_reading}</p>
+            <p className="text-stone-500">
+              <VerseReference
+                text={guide.bible_reading}
+                onSelect={setActiveReference}
+              />
+            </p>
           </div>
 
           <div className="flex flex-col gap-12">
@@ -154,9 +164,20 @@ export default function DailyGuideDetailPage() {
               <p className="text-xl font-display leading-relaxed">
                 {guide.verse_to_remember}
               </p>
-              <p className="text-stone-500">{guide.verse_reference}</p>
+              <p className="text-stone-500">
+                <VerseReference
+                  text={guide.verse_reference}
+                  onSelect={setActiveReference}
+                />
+              </p>
             </section>
           </div>
+
+          {/* Sentinel for the scroll-triggered share prompt. */}
+          <ShareOnScroll
+            title={guide.title}
+            url={`${SITE.netlifyUrl}/daily-guide/${guide.slug}`}
+          />
 
           <nav
             className="flex items-center justify-between mt-20 pt-8 border-t border-stone-200"
@@ -187,6 +208,11 @@ export default function DailyGuideDetailPage() {
           </nav>
         </div>
       </article>
+
+      <VersePopup
+        reference={activeReference}
+        onClose={() => setActiveReference(null)}
+      />
     </>
   );
 }
