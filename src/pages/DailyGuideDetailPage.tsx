@@ -177,6 +177,7 @@ export default function DailyGuideDetailPage() {
           <ShareOnScroll
             title={guide.title}
             url={`${SITE.netlifyUrl}/daily-guide/${guide.slug}`}
+            guideDate={guide.guide_date}
           />
 
           <nav

@@ -4,6 +4,18 @@ import { WhatsAppIcon, CloseIcon, ShareIcon } from "@/components/ui/Icons";
 interface ShareOnScrollProps {
   title: string;
   url: string;
+  guideDate: string;
+}
+
+function formatShareDate(dateStr: string) {
+  const date = new Date(dateStr + "T00:00:00");
+  return date
+    .toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
+    .toUpperCase();
 }
 
 /**
@@ -12,7 +24,11 @@ interface ShareOnScrollProps {
  * share today's guide with a friend on WhatsApp. Dismissible, and only
  * shown once per page visit.
  */
-export default function ShareOnScroll({ title, url }: ShareOnScrollProps) {
+export default function ShareOnScroll({
+  title,
+  url,
+  guideDate,
+}: ShareOnScrollProps) {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -33,7 +49,16 @@ export default function ShareOnScroll({ title, url }: ShareOnScrollProps) {
     return () => observer.disconnect();
   }, []);
 
-  const message = `${title} — a Daily Guide from The Fela ishola.\n\n${url}`;
+  const message = [
+    `📖 ${formatShareDate(guideDate)}`,
+    "",
+    "Read Today's Daily Guide with The Fela ishola",
+    "",
+    `*${title}*`,
+    "Read today's guide and be encouraged.",
+    "",
+    `👉 ${url}`,
+  ].join("\n");
   const whatsappHref = `https://wa.me/?text=${encodeURIComponent(message)}`;
 
   return (
