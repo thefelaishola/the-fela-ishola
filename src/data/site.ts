@@ -16,6 +16,7 @@ export const NAV_LINKS = [
   { label: "Ministry", href: "/ministry" },
   { label: "Daily Guide", href: "/daily-guide" },
   { label: "Messages", href: "/messages" },
+  { label: "Blog", href: "/blog" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Ask", href: "/ask" },
   { label: "Contact", href: "/contact" },

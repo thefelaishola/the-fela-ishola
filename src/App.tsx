@@ -8,6 +8,8 @@ import DailyGuideListPage from "@/pages/DailyGuideListPage";
 import DailyGuideDetailPage from "@/pages/DailyGuideDetailPage";
 import MessagesListPage from "@/pages/MessagesListPage";
 import MessageDetailPage from "@/pages/MessageDetailPage";
+import BlogListPage from "@/pages/BlogListPage";
+import BlogDetailPage from "@/pages/BlogDetailPage";
 import PortfolioListPage from "@/pages/PortfolioListPage";
 import PortfolioDetailPage from "@/pages/PortfolioDetailPage";
 import ContactPage from "@/pages/ContactPage";
@@ -36,6 +38,8 @@ export default function App() {
         <Route path="/daily-guide/:slug" element={<DailyGuideDetailPage />} />
         <Route path="/messages" element={<MessagesListPage />} />
         <Route path="/messages/:slug" element={<MessageDetailPage />} />
+        <Route path="/blog" element={<BlogListPage />} />
+        <Route path="/blog/:slug" element={<BlogDetailPage />} />
         <Route path="/portfolio" element={<PortfolioListPage />} />
         <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
         <Route path="/contact" element={<ContactPage />} />

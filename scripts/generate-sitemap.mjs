@@ -21,6 +21,7 @@ const STATIC_ROUTES = [
   { path: "/ministry", priority: "0.7", changefreq: "monthly" },
   { path: "/daily-guide", priority: "0.9", changefreq: "daily" },
   { path: "/messages", priority: "0.8", changefreq: "weekly" },
+  { path: "/blog", priority: "0.8", changefreq: "weekly" },
   { path: "/portfolio", priority: "0.7", changefreq: "monthly" },
   { path: "/contact", priority: "0.5", changefreq: "yearly" },
   { path: "/ask", priority: "0.6", changefreq: "monthly" },
@@ -99,6 +100,23 @@ async function fetchDynamicRoutes() {
           "0.6",
           "monthly",
           m.updated_at?.slice(0, 10)
+        )
+      );
+    }
+
+    const posts = await restQuery(
+      url,
+      key,
+      "blog_posts",
+      `select=slug,post_date,updated_at&published=eq.true&post_date=lte.${today}`
+    );
+    for (const p of posts ?? []) {
+      entries.push(
+        urlEntry(
+          `/blog/${p.slug}`,
+          "0.6",
+          "monthly",
+          (p.updated_at ?? p.post_date)?.slice(0, 10)
         )
       );
     }

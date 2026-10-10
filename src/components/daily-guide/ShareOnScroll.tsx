@@ -5,6 +5,10 @@ interface ShareOnScrollProps {
   title: string;
   url: string;
   guideDate: string;
+  /** First line of body text, e.g. "Read Today's Daily Guide with The Fela ishola". */
+  kicker?: string;
+  /** Line shown under the bolded title in the shared message. */
+  tagline?: string;
 }
 
 function formatShareDate(dateStr: string) {
@@ -28,6 +32,8 @@ export default function ShareOnScroll({
   title,
   url,
   guideDate,
+  kicker = "Read Today's Daily Guide with The Fela ishola",
+  tagline = "Read today's guide and be encouraged.",
 }: ShareOnScrollProps) {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -52,10 +58,10 @@ export default function ShareOnScroll({
   const message = [
     `📖 ${formatShareDate(guideDate)}`,
     "",
-    "Read Today's Daily Guide with The Fela ishola",
+    kicker,
     "",
     `*${title}*`,
-    "Read today's guide and be encouraged.",
+    tagline,
     "",
     `👉 ${url}`,
   ].join("\n");

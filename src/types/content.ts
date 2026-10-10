@@ -72,6 +72,20 @@ export type FreedomNationValue = {
   scriptures: string[];
 };
 
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  cover_image: string | null;
+  post_date: string; // ISO date
+  featured: boolean;
+  published: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface YouthQuestionSubmission {
   is_anonymous: boolean;
   name: string | null;
